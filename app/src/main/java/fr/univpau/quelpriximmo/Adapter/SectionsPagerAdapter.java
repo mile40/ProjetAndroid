@@ -1,4 +1,4 @@
-package fr.univpau.quelpriximmo.ui.main;
+package fr.univpau.quelpriximmo.Adapter;
 
 import android.content.Context;
 
