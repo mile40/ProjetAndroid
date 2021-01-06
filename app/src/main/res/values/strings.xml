@@ -4,6 +4,9 @@
     <string name="tab_text_2">Tab 2</string>
     <string name = "search">Recherche</string>
     <string name="goodType">Vous recherchez :</string>
+    <string name="roomNumber">Nombre de pieces :</string>
+    <string name="distance">Distance :</string>
+    <string name="rechercher">Rechercher</string>
 
     <string-array name="param_type_bien">
         <item>Tout</item>
@@ -11,5 +14,15 @@
         <item>Appartement</item>
         <item>Local</item>
         <item>Dependence</item>
+    </string-array>
+
+    <string-array name="param_nb_piece">
+        <item>Non spécifié</item>
+        <item>1 piece</item>
+        <item>2 pieces</item>
+        <item>3 pieces</item>
+        <item>4 pieces</item>
+        <item>5 pieces</item>
+        <item>+ de 5 pieces</item>
     </string-array>
 </resources>

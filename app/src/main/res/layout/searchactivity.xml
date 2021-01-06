@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/searchtext"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textStyle="bold"
-        android:background="@android:color/holo_green_dark"
-        android:text="@string/search"
+        android:background="@color/app_purple"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="QuelPrixImmo"
         android:textAlignment="center"
-        android:textSize="32sp"
-        android:gravity="center_horizontal" />
+        android:textColor="@color/app_yellow"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:layout_width="50dp"
@@ -26,22 +28,34 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignRight="@+id/searchtext"
-        android:src="@drawable/settings_icon"
-        android:background="@android:color/transparent"/>
+        android:background="@android:color/transparent"
+        android:src="@drawable/settings_icon" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/app_purple"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Recherche"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_below="@+id/searchtext">
+        android:layout_width="364dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchtext"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="70dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/lab_type_bien"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="5px"
-            android:layout_marginTop="5px"
             android:layout_weight="1"
             android:text="@string/goodType"
             android:textSize="20sp" />
@@ -52,9 +66,95 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:entries="@array/param_type_bien"
-            />
+            android:gravity="center_horizontal|center_vertical" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="364dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="160dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lab_nb_pieces"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/roomNumber"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:entries="@array/param_nb_piece" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="364dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="200dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lab_dist"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/distance"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <SeekBar
+                android:id="@+id/slider_dist"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/lab_dist_intersection"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="100m - 100m"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="364dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="250dp"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_recherche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="600dp"
+        android:gravity="center_vertical"
+        android:text="@string/rechercher"
+        android:textColor="@color/app_yellow"
+        app:backgroundTint="@color/app_purple" />
 
 </RelativeLayout>
