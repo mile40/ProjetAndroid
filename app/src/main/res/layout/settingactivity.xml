@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/purple_200">
 
     <TextView
         android:id="@+id/searchtext"
@@ -23,7 +24,6 @@
         android:src="@drawable/web_hi_res_512" />
 
     <ImageButton
-        android:id="@+id/settingsButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignRight="@+id/searchtext"
@@ -37,24 +37,22 @@
         android:layout_below="@+id/searchtext">
 
         <TextView
-            android:id="@+id/lab_type_bien"
-            android:layout_width="match_parent"
+            android:id="@+id/def_dist"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="5px"
             android:layout_marginTop="5px"
-            android:layout_weight="1"
-            android:text="@string/goodType"
+            android:gravity="center_vertical"
+            android:text="@string/def_dist"
             android:textSize="20sp" />
 
-        <Spinner
-            android:id="@+id/spin_type_biens"
-            android:layout_width="match_parent"
+        <SeekBar
+            android:id="@+id/param_def_dist"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:entries="@array/param_type_bien"
-            />
-
+            android:min="100"
+            android:max="2000"/>
     </LinearLayout>
 
 
