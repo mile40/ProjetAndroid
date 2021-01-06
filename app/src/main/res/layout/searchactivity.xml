@@ -29,11 +29,15 @@
         android:layout_below="@+id/searchtext">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/lab_type_bien"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="5px"
+            android:layout_marginLeft="5px"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/goodType" />
     </LinearLayout>
 
 
