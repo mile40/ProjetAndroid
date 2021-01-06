@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">QuelPrixImmo</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
     <string name = "search">Recherche</string>
     <string name="goodType">Vous recherchez :</string>
-    <string name="def_dist">Distance par défaut :</string>
 
     <string-array name="param_type_bien">
         <item>Tout</item>
