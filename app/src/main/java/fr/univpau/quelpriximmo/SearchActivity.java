@@ -7,7 +7,7 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SearchActivity extends AppCompatActivity{
+public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
     ImageButton ib;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -15,15 +15,17 @@ public class SearchActivity extends AppCompatActivity{
         setContentView(R.layout.searchactivity);
         getSupportActionBar().hide();
         ib = findViewById(R.id.settingsButton);
-        ib.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        ib.setOnClickListener(this);
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.settingsButton:
                 final Intent i = new Intent(SearchActivity.this, SettingsActivity.class);
                 startActivity(i);
-            }
-        });
-
-
-
+        }
     }
 }
