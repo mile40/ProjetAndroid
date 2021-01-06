@@ -43,7 +43,7 @@
             android:layout_marginLeft="5px"
             android:layout_marginTop="5px"
             android:gravity="center_vertical"
-            android:text="@string/def_dist"
+            android:text="@string/def_dist_text"
             android:textSize="20sp" />
 
         <SeekBar
