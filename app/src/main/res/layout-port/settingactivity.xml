@@ -33,20 +33,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/searchtext"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         android:orientation="horizontal">
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/def_dist"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginLeft="5px"
-            android:layout_marginTop="5px"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="@string/def_dist_text"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <SeekBar
             android:id="@+id/param_def_dist"
@@ -55,6 +60,11 @@
             android:layout_weight="1"
             android:max="2000"
             android:min="100" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
 

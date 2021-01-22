@@ -5,7 +5,7 @@
     <string name="roomNumber">Nombre de pieces :</string>
     <string name="distance">Distance :</string>
     <string name="rechercher">Rechercher</string>
-    <string name="def_dist_text">Distance par défaut : </string>
+    <string name="def_dist_text">Distance défaut : </string>
 
     <string-array name="param_type_bien">
         <item>Tout</item>
