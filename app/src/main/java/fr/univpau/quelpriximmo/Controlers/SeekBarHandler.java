@@ -10,16 +10,12 @@ public class SeekBarHandler implements SeekBar.OnSeekBarChangeListener {
 
     public SeekBarHandler(SeekBar sb, TextView tw) {
         this.sb = sb;
-        this.tw = tw;
-    }
-
-    public void SeekBarHandler(SeekBar sb, TextView tw){
-        this.sb = sb;
+        this.sb.setOnSeekBarChangeListener(this);
         this.tw = tw;
     }
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        Log.i("Debug", String.valueOf(progress));
+        Log.i("SeekBarDebug", String.valueOf(progress));
     }
 
     @Override
