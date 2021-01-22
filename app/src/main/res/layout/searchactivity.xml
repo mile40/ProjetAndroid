@@ -59,6 +59,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:text="@string/goodType"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <Spinner
@@ -85,6 +86,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/roomNumber"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <Spinner
@@ -109,6 +111,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/distance"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <LinearLayout
