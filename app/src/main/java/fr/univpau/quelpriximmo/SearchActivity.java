@@ -11,9 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
 
+import fr.univpau.quelpriximmo.Controlers.OnCLickHandler;
 import fr.univpau.quelpriximmo.Controlers.SeekBarHandler;
 
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
+public class SearchActivity extends AppCompatActivity{
     private ImageButton ib;
     private SeekBar sb;
     private TextView tw;
@@ -23,22 +24,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.searchactivity);
         getSupportActionBar().hide();
         ib = findViewById(R.id.settingsButton);
-        ib.setOnClickListener(this);
         sb = (SeekBar) findViewById(R.id.slider_dist);
         tw = (TextView) findViewById(R.id.lab_dist_intersection);
 
         SeekBarHandler sbh = new SeekBarHandler(sb, tw);
-
-
-
+        OnCLickHandler och = new OnCLickHandler(ib);
+        
     }
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.settingsButton:
-                final Intent i = new Intent(SearchActivity.this, SettingsActivity.class);
-                startActivity(i);
-        }
-    }
 }
