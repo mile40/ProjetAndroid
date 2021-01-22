@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:background="@color/app_purple"
         android:gravity="center_horizontal"
-        android:text="@string/search"
+        android:text="Parametres"
         android:textAlignment="center"
         android:textColor="@color/app_yellow"
         android:textSize="32sp"
