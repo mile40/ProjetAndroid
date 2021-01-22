@@ -16,15 +16,14 @@ public class SettingsActivity extends Activity implements SeekBar.OnSeekBarChang
         setContentView(R.layout.settingactivity);
 
         sb = (SeekBar) findViewById(R.id.param_def_dist);
-        valTxt = (TextView) findViewById(R.id.def_dist);
-        def_dist_text = (String) valTxt.getText();
-        valTxt.setText(def_dist_text + " " + String.valueOf(sb.getProgress()) + "m");
+        valTxt = (TextView) findViewById(R.id.dist_default_value);
+        valTxt.setText(String.valueOf(sb.getProgress()) + "m");
 
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        valTxt.setText(def_dist_text + " " + String.valueOf(progress) + "m");
+        valTxt.setText(String.valueOf(progress) + "m");
     }
 
     @Override
