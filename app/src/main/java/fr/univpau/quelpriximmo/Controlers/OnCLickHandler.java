@@ -1,6 +1,7 @@
 package fr.univpau.quelpriximmo.Controlers;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -8,8 +9,10 @@ import fr.univpau.quelpriximmo.R;
 import fr.univpau.quelpriximmo.SearchActivity;
 import fr.univpau.quelpriximmo.SettingsActivity;
 
+//cette classe est une classe permettant de gérer les clics sur les boutons
 public class OnCLickHandler implements View.OnClickListener{
     private View btn;
+
 
     public OnCLickHandler(View v) {
         this.btn = v;
@@ -19,9 +22,19 @@ public class OnCLickHandler implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch(v.getId()){
+            //si c'est le bouton permettant d'acceder à la page de paramètres
             case R.id.settingsButton:
                 final Intent i = new Intent(btn.getContext() , SettingsActivity.class);
                 btn.getContext().startActivity(i);
+                break;
+                //bouton permettant de lancer la requette http et d'aller sur la page de resultat
+            case R.id.btn_recherche:
+                //TODO: faire le code qui gère ça
+                break;
+            default:
+                Log.e("Debug", "Bouton "+v.getId()+" inconnu.");
+                break;
+
         }
     }
 }
