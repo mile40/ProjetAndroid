@@ -4,6 +4,9 @@ import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import fr.univpau.quelpriximmo.R;
+
+//classe permettant d'abstraire la gestion des événemments relatifs aux sliders
 public class SeekBarHandler implements SeekBar.OnSeekBarChangeListener {
     private SeekBar sb;
     private TextView tw;
@@ -15,7 +18,19 @@ public class SeekBarHandler implements SeekBar.OnSeekBarChangeListener {
     }
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        Log.i("SeekBarDebug", String.valueOf(progress));
+        switch (seekBar.getId()){
+            //slider de la page de recherche
+            case R.id.slider_dist:
+                //TODO: faire le code
+                break;
+                //slider permettant de gerer la distance de recherrche par defaut
+            case R.id.param_def_dist:
+                //TODO: faire le code
+                    tw.setText(tw + " " + String.valueOf(progress) + "m");
+                break;
+            default:
+                Log.e("Debug", "SeekBar "+seekBar.getId()+" inconnu.");
+        }
     }
 
     @Override
