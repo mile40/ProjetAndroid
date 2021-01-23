@@ -17,6 +17,8 @@
        </activity>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".SettingsActivity"/>
+        <activity android:name=".ResultsActivity"/>
+        <activity android:name=".DetailsActivity"/>
     </application>
 
 </manifest>
