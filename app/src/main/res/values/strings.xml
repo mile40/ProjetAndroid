@@ -6,6 +6,10 @@
     <string name="distance">Distance :</string>
     <string name="rechercher">Rechercher</string>
     <string name="def_dist_text">Distance défaut : </string>
+    <string name="gps_not_enabled">Cette application n\'a pas accès aux données GPS. Merci de les activer</string>
+    <string name="open_location_settings">voulez-vous accéder aux paramètres?</string>
+    <string name="cancel">annuler</string>
+
 
     <string-array name="param_type_bien">
         <item>Tout</item>

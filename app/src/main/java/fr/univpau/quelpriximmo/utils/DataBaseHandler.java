@@ -101,6 +101,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 if(cur.moveToFirst()){
                     do{
                         ImmoModel immo = new ImmoModel();
+                        immo.setID(cur.getInt(cur.getColumnIndex(ID)));
                         immo.setAdress(cur.getString(cur.getColumnIndex(ADRESSE)));
                         immo.setPrix(cur.getDouble(cur.getColumnIndex(PRIX)));
                         immo.setNb_pieces(cur.getInt(cur.getColumnIndex(NB_PIECES)));

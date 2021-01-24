@@ -1,6 +1,7 @@
 package fr.univpau.quelpriximmo.Models;
 
 public class ImmoModel {
+    private int id ;
     private double prix;
     private String adresse;
     private int nb_pieces;
@@ -31,6 +32,8 @@ public class ImmoModel {
         this.distance = distance;
     }
 
+    public void setID(int id){this.id = id;}
+
     public double getPrix() {
         return prix;
     }
@@ -50,6 +53,8 @@ public class ImmoModel {
     public double getDistance() {
         return distance;
     }
+
+    public int getId(){return id;}
 
     public double getLongitude(){
         return this.coords[0];

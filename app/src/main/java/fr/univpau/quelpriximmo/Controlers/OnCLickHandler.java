@@ -30,6 +30,7 @@ public class OnCLickHandler implements View.OnClickListener{
                 //bouton permettant de lancer la requette http et d'aller sur la page de resultat
             case R.id.btn_recherche:
                 //TODO: faire le code qui gère ça
+
                 break;
             default:
                 Log.e("Debug", "Bouton "+v.getId()+" inconnu.");
