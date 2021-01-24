@@ -7,7 +7,7 @@
     <string name="rechercher">Rechercher</string>
     <string name="def_dist_text">Distance défaut : </string>
     <string name="gps_not_enabled">Cette application n\'a pas accès aux données GPS. Merci de les activer</string>
-    <string name="open_location_settings">voulez-vous accéder aux paramètres?</string>
+    <string name="open_location_settings">acceder aux parametres</string>
     <string name="cancel">annuler</string>
 
 

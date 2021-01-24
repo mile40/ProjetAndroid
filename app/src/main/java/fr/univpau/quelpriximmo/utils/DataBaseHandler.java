@@ -52,11 +52,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+IMMO_TABLE);
     }
 
-    public void insert(String type_bien, int nb_pieces, double prix, double longitude, double latitude, Location usrPos){
+    public void insert(String type_bien, int nb_pieces, double prix, String adresse, double longitude, double latitude, Location usrPos){
         ContentValues cv = new ContentValues();
         cv.put(TYPE_BIEN, type_bien);
         cv.put(NB_PIECES, nb_pieces);
         cv.put(PRIX, prix);
+        cv.put(ADRESSE, adresse);
         cv.put(LONGITUDE, longitude);
         cv.put(LATITUDE, latitude);
         cv.put(DISTANCE, Math.abs((usrPos.getLatitude() - latitude)/(usrPos.getLongitude()-longitude)));
@@ -90,7 +91,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             selection = selection+"AND prix >=? ";
             selectionArgs.add(Integer.toString(prix_min));
         }
-        
+
 
         db.beginTransaction();
         try{
