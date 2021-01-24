@@ -83,8 +83,8 @@ public class SplashScreen extends AppCompatActivity {
                                 - "voie"
                                 - "code_postal"
                                 - "commune"
-                       - longitude la longitude. la t'as le choix, soit tu récupère l'instance "geom" de l'élément, puis coordinates et t'auras directement longitude et latitude, soit  tu vas dans properties et tu prend "lon"
-                       - latitude la latitude. la t'as le choix, soit tu récupère l'instance "geom" de l'élément, puis coordinates et t'auras directement longitude et latitude, soit  tu vas dans properties et tu prend "lat"
+                       - longitude la longitude. la t'as le choix, soit tu récupère l'instance "geometry" de l'élément, puis coordinates et t'auras directement longitude et latitude, soit  tu vas dans properties et tu prend "lon"
+                       - latitude la latitude. la t'as le choix, soit tu récupère l'instance "geometry" de l'élément, puis coordinates et t'auras directement longitude et latitude, soit  tu vas dans properties et tu prend "lat"
                        - usrPos, bah la t'as juste à faire passer en paramètre la localisation obtenue par le capteur GPS, la BDD se charge du reste
                    */
             } catch (Exception e) {
