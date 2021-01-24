@@ -37,6 +37,7 @@ public class SplashScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("SAH", "salut");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashscreen);
         getSupportActionBar().hide();
@@ -49,7 +50,7 @@ public class SplashScreen extends AppCompatActivity {
             crit.setSpeedRequired(false);
 
             fournisseur = lm.getBestProvider(crit, true);
-            Log.i("Debug", "fournisseur: " + fournisseur);
+            Log.i("SAH", "fournisseur: " + fournisseur);
 
             if (fournisseur != null) {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -86,9 +87,8 @@ public class SplashScreen extends AppCompatActivity {
                 }
                 br.close(); //on ferme le strema une fois la récupération du résultat fini;
                 String jsonString = sb.toString();
-                Log.i("Debug", "résulat de la requête: "+jsonString);
+                Log.i("SAH", "résulat de la requête: "+jsonString);
                 res = new JSONObject(jsonString);
-
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,7 +100,7 @@ public class SplashScreen extends AppCompatActivity {
                         startActivity(i);
                         finish();
                     }
-                },5000);
+                },15000);
             }
         }
 
