@@ -18,9 +18,22 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+
+import fr.univpau.quelpriximmo.utils.Variables;
+
 public class SplashScreen extends AppCompatActivity {
     private LocationManager lm = null;
     private String fournisseur;
+    private Location loc;
+    private JSONObject res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +61,48 @@ public class SplashScreen extends AppCompatActivity {
                     }).setNegativeButton(R.string.cancel, null).show();
                     return;
                 }
-                Location loc = lm.getLastKnownLocation(fournisseur);
+                loc = lm.getLastKnownLocation(fournisseur);
                 Log.i("Debug", "Localisation: Longitde: "+Double.toString(loc.getLongitude())+" Latitude: "+  Double.toString(loc.getLatitude()));
             }
-        }
-        final Intent i = new Intent(SplashScreen.this, SearchActivity.class);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(i);
-                finish();
+
+            try{
+                //connection à l'API
+                HttpURLConnection urlC = null;
+                URL url = new URL("https://api.cquest.org/dvf?lat="+Double.toString(loc.getLatitude())+"&lon="+Double.toString(loc.getLongitude())+"&dist=2000");
+                urlC = (HttpURLConnection) url.openConnection();
+                urlC.setRequestMethod("GET");
+                urlC.setReadTimeout(10000);
+                urlC.setConnectTimeout(15000);
+                urlC.setDoOutput(true);
+                urlC.connect();
+
+                BufferedReader  br = new BufferedReader(new InputStreamReader(url.openStream()));
+                StringBuilder sb =  new StringBuilder();
+                String line;
+
+                //tant que y'a des données
+                while((line = br.readLine()) != null ){
+                    sb.append(line = "\n");
+                }
+                br.close(); //on ferme le strema une fois la récupération du résultat fini;
+                String jsonString = sb.toString();
+                Log.i("Debug", "résulat de la requête: "+jsonString);
+                res = new JSONObject(jsonString);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                final Intent i = new Intent(SplashScreen.this, SearchActivity.class);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(i);
+                        finish();
+                    }
+                },5000);
             }
-        },5000);
+        }
+
     }
 }

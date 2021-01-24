@@ -7,8 +7,17 @@ public class ImmoModel {
     private int nb_pieces;
     private double[] coords;
     private double distance;
+    private String type_bien;
     //une image ??
 
+
+    public void setType_bien(String type_bien) {
+        this.type_bien = type_bien;
+    }
+
+    public String getType_bien() {
+        return type_bien;
+    }
 
     public void setPrix(double prix) {
         this.prix = prix;
