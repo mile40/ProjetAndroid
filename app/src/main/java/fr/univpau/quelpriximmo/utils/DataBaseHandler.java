@@ -63,7 +63,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.insert(IMMO_TABLE, null, cv);
     }
 
-    public List<ImmoModel> getImmo(String type_bien, double distance, int nb_pieces, int prix_min, int prix_max ){
+    public List<ImmoModel> getImmo(String type_bien, double distance, int nb_pieces, int prix_min){
         List<ImmoModel> immoList = new ArrayList<>();
         Cursor cur = null;
 
@@ -90,11 +90,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             selection = selection+"AND prix >=? ";
             selectionArgs.add(Integer.toString(prix_min));
         }
-
-        if(prix_max != -1){
-            selection = selection +"AND prix <=?";
-            selectionArgs.add(Integer.toString(prix_max));
-        }
+        
 
         db.beginTransaction();
         try{
