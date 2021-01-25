@@ -26,7 +26,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private static final String ADRESSE = "adresse";
     private static final String NB_PIECES = "nb_pieces";
     private static final String PRIX = "prix";
-    private static final String CREATE_IMMO_TABLE = "CREATE TABLE "+IMMO_TABLE+"("+ID+ "INTEGER PRIMARY KEY AUTOINCREMENT, "+ TYPE_BIEN + " TEXT, "+ADRESSE+ "TEXT, "+NB_PIECES+" INTEGER, "+LONGITUDE+" REAL, "
+    private static final String CREATE_IMMO_TABLE = "CREATE TABLE "+IMMO_TABLE+"("+ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+ TYPE_BIEN + " TEXT, "+ADRESSE+ "TEXT, "+NB_PIECES+" INTEGER, "+LONGITUDE+" REAL, "
                                 +LATITUDE+" REAL, "+DISTANCE+" REAL, "+PRIX+" REAL)";
     private SQLiteDatabase db;
 
