@@ -1,7 +1,9 @@
 package fr.univpau.quelpriximmo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -30,7 +32,9 @@ public class SearchActivity extends AppCompatActivity{
         btn_param =(ImageButton) findViewById(R.id.settingsButton);
         dist_recherche = (SeekBar) findViewById(R.id.slider_dist);
         tw = (TextView) findViewById(R.id.lab_dist_intersection);
-
+        SharedPreferences params = PreferenceManager.getDefaultSharedPreferences(this);
+        int rayon = params.getInt("rayon_defaut", 500);
+        dist_recherche.setProgress(rayon);
         //affectation des éventuels éventHandlers
         SeekBarHandler sbh = new SeekBarHandler(dist_recherche, tw);
         OnCLickHandler och = new OnCLickHandler((View) btn_param);

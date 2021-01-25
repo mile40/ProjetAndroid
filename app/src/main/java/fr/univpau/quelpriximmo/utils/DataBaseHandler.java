@@ -53,7 +53,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     }
 
     public void create(){
-        this.onCreate(this.db);
+        onCreate(db);
     }
 
     public void insert(String type_bien, int nb_pieces, double prix, String adresse, double longitude, double latitude, Location usrPos){

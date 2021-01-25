@@ -76,7 +76,7 @@ public class SplashScreen extends AppCompatActivity {
                 String jsonString = sb.toString(); //on convertis le tout en string
                 res = new JSONObject(jsonString); //on instancie un JSON
 
-                /*TODO: lire le JSON et pour chaque élément du tabeau de json insérer dans la base de données les données suivantes:
+                /* lire le JSON et pour chaque élément du tabeau de json insérer dans la base de données les données suivantes:
                     toutes les données qui nous intéresent sont contenues dans un grand tableau appelé "features", il faudra commencer par le récupérer. Chaque élément de ce tableau est un bien.
                     pour chaque élément de ce tableau appeller la fonction db.insert(String type_bien, int nb_pieces, double prix, String adresse, double longitude, double latitude, Location usrPos).
                     La grande majorité des éléments qui nous intéresse sont quand à eux contenus dans un sous objet de cet élement sous la clé "properties"

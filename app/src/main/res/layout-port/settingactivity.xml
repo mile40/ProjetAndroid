@@ -5,6 +5,19 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/searchtext"
         android:layout_width="match_parent"
@@ -57,7 +70,7 @@
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:max="2000"
-                android:min="100" />
+                android:min="0" />
 
             <TextView
                 android:id="@+id/dist_default_value"

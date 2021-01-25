@@ -9,6 +9,7 @@
     <string name="gps_not_enabled">Cette application n\'a pas accès aux données GPS. Merci de les activer</string>
     <string name="open_location_settings">acceder aux parametres</string>
     <string name="cancel">annuler</string>
+    <string name="save">Sauvegarder</string>
 
 
     <string-array name="param_type_bien">

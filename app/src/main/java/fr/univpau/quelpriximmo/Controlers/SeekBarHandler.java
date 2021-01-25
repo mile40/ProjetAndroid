@@ -1,8 +1,12 @@
 package fr.univpau.quelpriximmo.Controlers;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import java.util.prefs.PreferenceChangeEvent;
 
 import fr.univpau.quelpriximmo.R;
 
@@ -25,8 +29,11 @@ public class SeekBarHandler implements SeekBar.OnSeekBarChangeListener {
                 break;
                 //slider permettant de gerer la distance de recherrche par defaut
             case R.id.param_def_dist:
-                //TODO: faire le code
-                    tw.setText(tw + " " + String.valueOf(progress) + "m");
+                tw.setText(tw + " " + String.valueOf(progress) + "m");
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(seekBar.getContext());
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putInt("rayon_defaut", progress);
+                editor.apply();
                 break;
             default:
                 Log.e("Debug", "SeekBar "+seekBar.getId()+" inconnu.");
