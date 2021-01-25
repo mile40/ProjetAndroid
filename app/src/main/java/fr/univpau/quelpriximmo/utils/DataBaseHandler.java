@@ -48,8 +48,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
     }
 
-    public void flush(SQLiteDatabase db){
+    public void flush(){
         db.execSQL("DROP TABLE IF EXISTS "+IMMO_TABLE);
+    }
+
+    public void create(){
+        this.onCreate(this.db);
     }
 
     public void insert(String type_bien, int nb_pieces, double prix, String adresse, double longitude, double latitude, Location usrPos){

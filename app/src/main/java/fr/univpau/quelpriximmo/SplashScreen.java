@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -27,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import fr.univpau.quelpriximmo.utils.DataBaseHandler;
 import fr.univpau.quelpriximmo.utils.GPSHandler;
 import fr.univpau.quelpriximmo.utils.Variables;
 
@@ -35,6 +38,7 @@ public class SplashScreen extends AppCompatActivity {
     private Location loc;
     private JSONObject res;
     private URL url;
+    private DataBaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,9 @@ public class SplashScreen extends AppCompatActivity {
         getSupportActionBar().hide();
         gp = new GPSHandler();
         gp.handleGPS(this);
+        db.openDatabase();
+        db.flush();
+        db.create();
 
             try{
                 //URL de connection
@@ -87,6 +94,13 @@ public class SplashScreen extends AppCompatActivity {
                        - latitude la latitude. la t'as le choix, soit tu récupère l'instance "geometry" de l'élément, puis coordinates et t'auras directement longitude et latitude, soit  tu vas dans properties et tu prend "lat"
                        - usrPos, bah la t'as juste à faire passer en paramètre la localisation obtenue par le capteur GPS, la BDD se charge du reste
                    */
+                JSONArray features = res.getJSONArray("features");
+                for(int i = 0; i< features.length(); i++){
+                    JSONObject elt = features.getJSONObject(i).getJSONObject("properties");
+                    db.insert(elt.getString("type_local"), elt.getInt("nombre_pieces_principales"), elt.getDouble("valeur_fonciere"),
+                            elt.getString("numero_voie")+", "+elt.getString("type_voie")+ " " +elt.getString("voie")+", "+elt.getString("code_postal")+
+                            " "+elt.getString("commune"), elt.getDouble("lon"), elt.getDouble("lat"), gp.getLocation());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
