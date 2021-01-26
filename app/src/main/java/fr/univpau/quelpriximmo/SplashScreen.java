@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,17 +30,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import fr.univpau.quelpriximmo.utils.HTTPRequestTask;
 import fr.univpau.quelpriximmo.utils.DataBaseHandler;
 
 public class SplashScreen extends AppCompatActivity {
     private JSONObject res;
-    private URL url;
     private DataBaseHandler db;
-
-    private Location loc;
+    //private Location loc;
     private LocationManager manager;
     private LocationRequest locationRequest;
     private FusedLocationProviderClient fusedLocationClient;
+    private HTTPRequestTask t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +56,7 @@ public class SplashScreen extends AppCompatActivity {
         locationRequest.setInterval(30000);
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
     }
 
     @Override
@@ -81,7 +81,7 @@ public class SplashScreen extends AppCompatActivity {
                     @Override
                     public void onSuccess(Location location) {
                         Log.i("DEBUG_GPS", "Long : " + Double.toString(location.getLongitude()) + " Lat : " + Double.toString(location.getLatitude()) );
-                        doHttpRequest();
+                        doHttpRequest(location);
                     }
                 });
             }
@@ -129,70 +129,37 @@ public class SplashScreen extends AppCompatActivity {
         alert.show();
     }
 
-    protected void doHttpRequest(){
+    protected void doHttpRequest(Location l){
         try{
-            //URL de connection
-            HttpURLConnection urlC = null;
-            url = new URL("https://api.cquest.org/dvf?lat="+Double.toString(loc.getLatitude())+"&lon="+Double.toString(loc.getLongitude())+"&dist=2000"); //création de l'URL
-            Log.i("HTTP_RES",url.toString());
-            urlC = (HttpURLConnection) url.openConnection(); //démarrage de la connexion
-            urlC.setRequestMethod("GET");   //type de méthde (ici on veu juste faire un get)
-            urlC.setReadTimeout(10000); //timeout de la lecture
-            urlC.setConnectTimeout(15000); //timeout de la connexion
-            urlC.setDoOutput(true); //ça donne un résultat
-            urlC.connect(); //on se connecte
-
-            //préparation a la lecture de la sortie de la requete
-            BufferedReader  br = new BufferedReader(new InputStreamReader(url.openStream()));
-            StringBuilder sb =  new StringBuilder();
-            String line;
-
-            //tant que y'a des données
-            while((line = br.readLine()) != null ){
-                sb.append(line = "\n"); //on concatène
+            t = new HTTPRequestTask(l);
+            t.start();
+            while( !t.isFinished() ){
+                Log.i("HTTP_RES","Wait");
             }
-            br.close(); //on ferme le stream une fois la récupération du résultat fini;
-            String jsonString = sb.toString(); //on convertis le tout en string
-            res = new JSONObject(jsonString); //on instancie un JSON
-            Log.i("HTTP_RES", jsonString);
-                /* lire le JSON et pour chaque élément du tabeau de json insérer dans la base de données les données suivantes:
-                    toutes les données qui nous intéresent sont contenues dans un grand tableau appelé "features", il faudra commencer par le récupérer. Chaque élément de ce tableau est un bien.
-                    pour chaque élément de ce tableau appeller la fonction db.insert(String type_bien, int nb_pieces, double prix, String adresse, double longitude, double latitude, Location usrPos).
-                    La grande majorité des éléments qui nous intéresse sont quand à eux contenus dans un sous objet de cet élement sous la clé "properties"
-                    avec:
-                       - type_bien le type de bien (contenu dans le json sous la clé "type_local", elle même contenue dans la partie "properties" de l'objet
-                       - nb_pieces le nombre de pieces (contenu dans le json sous la clé "nombre_pieces_principales", elle même contenue dans la partie "properties" de l'objet
-                       - prix le prix (sans dec') du lor, contenu dans le jron sous la clé "valeur_fonciere" (idem c'est dans "properties")
-                       - adresse qui est la concaténationn des valeurs des clés suivantes (cotenues dans properties égelement) dans l'ordre que je t'ai donné:
-                                - "numero_voie"
-                                - "type_voie"
-                                - "voie"
-                                - "code_postal"
-                                - "commune"
-                       - longitude la longitude. la t'as le choix, soit tu récupère l'instance "geometry" de l'élément, puis coordinates et t'auras directement longitude et latitude, soit  tu vas dans properties et tu prend "lon"
-                       - latitude la latitude. la t'as le choix, soit tu récupère l'instance "geometry" de l'élément, puis coordinates et t'auras directement longitude et latitude, soit  tu vas dans properties et tu prend "lat"
-                       - usrPos, bah la t'as juste à faire passer en paramètre la localisation obtenue par le capteur GPS, la BDD se charge du reste
-                   */
-            JSONArray features = res.getJSONArray("features");
+
+            JSONArray features = t.getRes().getJSONArray("features");
+
             for(int i = 0; i< features.length(); i++){
                 JSONObject elt = features.getJSONObject(i).getJSONObject("properties");
-                db.insert(elt.getString("type_local"), elt.getInt("nombre_pieces_principales"), elt.getDouble("valeur_fonciere"),
-                        elt.getString("numero_voie")+", "+elt.getString("type_voie")+ " " +elt.getString("voie")+", "+elt.getString("code_postal")+
-                                " "+elt.getString("commune"), elt.getDouble("lon"), elt.getDouble("lat"), loc);
+                Log.i("HTTP_RES",elt.toString());
+                if(elt.has("type_local")){
+                    db.insert(elt.getString("type_local"), elt.getInt("nombre_pieces_principales"), elt.getDouble("valeur_fonciere"),
+                            elt.getString("numero_voie")+", "+elt.getString("type_voie")+ " " +elt.getString("voie")+", "+elt.getString("code_postal")+
+                                    " "+elt.getString("commune"), elt.getDouble("lon"), elt.getDouble("lat"), l);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            Log.i("HTTP_RES","Error HTTP Request");
+            Log.e("HTTP_RES", Log.getStackTraceString(e));
         } finally {
-            /*final Intent i = new Intent(SplashScreen.this, SearchActivity.class);
+            final Intent i = new Intent(SplashScreen.this, SearchActivity.class);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     startActivity(i);
                     finish();
                 }
-            }, 5000);*/
-            Log.i("DEBUG_GPS","Requete HTTP reussie");
+            }, 5000);
+            Log.i("HTTP_RES","Requete HTTP reussie");
         }
 
     }
