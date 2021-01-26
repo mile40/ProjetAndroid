@@ -138,15 +138,77 @@ public class SplashScreen extends AppCompatActivity {
             }
 
             JSONArray features = t.getRes().getJSONArray("features");
+            String type_local, adresse = "N/A";
+            int nb_pieces;
+            double prix, longitude, latitude;
 
             for(int i = 0; i< features.length(); i++){
                 JSONObject elt = features.getJSONObject(i).getJSONObject("properties");
                 Log.i("HTTP_RES",elt.toString());
                 if(elt.has("type_local")){
-                    db.insert(elt.getString("type_local"), elt.getInt("nombre_pieces_principales"), elt.getDouble("valeur_fonciere"),
-                            elt.getString("numero_voie")+", "+elt.getString("type_voie")+ " " +elt.getString("voie")+", "+elt.getString("code_postal")+
-                                    " "+elt.getString("commune"), elt.getDouble("lon"), elt.getDouble("lat"), l);
+                    type_local = elt.getString("type_local");
+                }else{
+                    type_local = "Inconnu";
                 }
+
+                if(elt.has("nombre_pieces_principales")) {
+                    nb_pieces = elt.getInt("nombre_pieces_principales");
+                }else{
+                    nb_pieces = -1;
+                }
+
+                if(elt.has("numero_voie")){
+                    switch(adresse){
+                        case "N/A":
+                            adresse = elt.getString("numero_voie")+", ";
+                            break;
+                        default:
+                            adresse = adresse+elt.getString("numero_voie"+", ");
+                    }
+                }
+
+                if(elt.has("type_voie")){
+                    switch(adresse){
+                        case "N/A":
+                            adresse = elt.getString("type_voie")+", ";
+                            break;
+                        default:
+                            adresse = adresse+elt.getString("type_voie"+", ");
+                    }
+                }
+
+                if(elt.has("voie")){
+                    switch(adresse){
+                        case "N/A":
+                            adresse = elt.getString("voie")+", ";
+                            break;
+                        default:
+                            adresse = adresse+elt.getString("voie"+", ");
+                    }
+                }
+
+                if(elt.has("code_postale")){
+                    switch(adresse){
+                        case "N/A":
+                            adresse = elt.getString("code_postal")+", ";
+                            break;
+                        default:
+                            adresse = adresse+elt.getString("code_postal"+", ");
+                    }
+                }
+
+                if(elt.has("commune")){
+                    switch(adresse){
+                        case "N/A":
+                            adresse = elt.getString("commune");
+                            break;
+                        default:
+                            adresse = adresse+elt.getString("commune");
+                    }
+                }
+                
+                db.insert(type_local, nb_pieces, elt.getDouble("valeur_fonciere"),
+                        adresse, elt.getDouble("lon"), elt.getDouble("lat"), l);
             }
         } catch (Exception e) {
             Log.e("HTTP_RES", Log.getStackTraceString(e));
