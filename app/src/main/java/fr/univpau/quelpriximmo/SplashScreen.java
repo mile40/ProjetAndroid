@@ -199,7 +199,7 @@ public class SplashScreen extends AppCompatActivity {
                     builderAddress.append(", ");
                     builderAddress.append(elt.getString("commune"));
                 }
-                
+
                 db.insert(type_local, nb_pieces, prix,
                         builderAddress.toString(), elt.getDouble("lon"), elt.getDouble("lat"), l);
                 Log.i("HTTP_RES",elt.toString());

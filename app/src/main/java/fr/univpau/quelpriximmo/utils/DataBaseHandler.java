@@ -66,7 +66,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         cv.put(LATITUDE, latitude);
         double x = (longitude - usrPos.getLongitude())* Math.cos((usrPos.getLatitude() + latitude)/2);
         double y = (latitude - usrPos.getLatitude());
-        cv.put(DISTANCE, Math.abs(Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2))*6371));
+        cv.put(DISTANCE, Math.round(Math.abs(Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2))*6371)));
         db.insert(IMMO_TABLE, null, cv);
     }
 
@@ -122,5 +122,31 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             cur.close();
         }
         return immoList;
+    }
+
+
+    public ImmoModel getImmoById(int id){
+        Cursor cur = null;
+        ImmoModel immo = new ImmoModel();
+        String[] tab = new String[1];
+        tab[0] = String.valueOf(id);
+        db.beginTransaction();
+        try{
+            cur = db.query(false, IMMO_TABLE, null,  "id =?", tab , null, null, null, null);
+            if(cur != null){
+                if(cur.moveToFirst()){
+                    immo.setID(cur.getInt(cur.getColumnIndex(ID)));
+                    immo.setAdress(cur.getString(cur.getColumnIndex(ADRESSE)));
+                    immo.setPrix(cur.getDouble(cur.getColumnIndex(PRIX)));
+                    immo.setNb_pieces(cur.getInt(cur.getColumnIndex(NB_PIECES)));
+                    immo.setDistance(cur.getDouble(cur.getColumnIndex(DISTANCE)));
+                    immo.setCoords(cur.getDouble(cur.getColumnIndex(LONGITUDE)), cur.getDouble(cur.getColumnIndex(LATITUDE)));
+                }
+            }
+        }finally {
+            db.endTransaction();
+            cur.close();
+        }
+        return immo;
     }
 }
