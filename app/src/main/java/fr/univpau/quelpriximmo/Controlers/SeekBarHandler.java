@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.util.prefs.PreferenceChangeEvent;
 
 import fr.univpau.quelpriximmo.R;
+import fr.univpau.quelpriximmo.utils.Variables;
 
 //classe permettant d'abstraire la gestion des événemments relatifs aux sliders
 public class SeekBarHandler implements SeekBar.OnSeekBarChangeListener {
@@ -25,11 +26,12 @@ public class SeekBarHandler implements SeekBar.OnSeekBarChangeListener {
         switch (seekBar.getId()){
             //slider de la page de recherche
             case R.id.slider_dist:
-                //TODO: faire le code
+                tw.setText("0 m - "+String.valueOf(progress) + " m");
+                Variables.distance = progress;
                 break;
                 //slider permettant de gerer la distance de recherrche par defaut
             case R.id.param_def_dist:
-                tw.setText(tw + " " + String.valueOf(progress) + "m");
+                tw.setText(String.valueOf(progress) + " m");
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(seekBar.getContext());
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putInt("rayon_defaut", progress);

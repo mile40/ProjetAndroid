@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import fr.univpau.quelpriximmo.R;
+import fr.univpau.quelpriximmo.ResultsActivity;
 import fr.univpau.quelpriximmo.SearchActivity;
 import fr.univpau.quelpriximmo.SettingsActivity;
 
@@ -21,17 +22,20 @@ public class OnCLickHandler implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        final Intent i;
         switch(v.getId()){
             //si c'est le bouton permettant d'acceder à la page de paramètres
             case R.id.settingsButton:
-                final Intent i = new Intent(btn.getContext() , SettingsActivity.class);
+                i = new Intent(btn.getContext() , SettingsActivity.class);
                 btn.getContext().startActivity(i);
                 break;
                 //bouton permettant de lancer la requette http et d'aller sur la page de resultat
             case R.id.btn_recherche:
                 //TODO: faire le code qui gère ça
-
+                i = new Intent(btn.getContext() , ResultsActivity.class);
+                btn.getContext().startActivity(i);
                 break;
+
             default:
                 Log.e("Debug", "Bouton "+v.getId()+" inconnu.");
                 break;

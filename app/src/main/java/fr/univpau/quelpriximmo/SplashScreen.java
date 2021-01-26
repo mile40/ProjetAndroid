@@ -4,12 +4,14 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ import java.net.URL;
 
 import fr.univpau.quelpriximmo.utils.HTTPRequestTask;
 import fr.univpau.quelpriximmo.utils.DataBaseHandler;
+import fr.univpau.quelpriximmo.utils.Variables;
 
 public class SplashScreen extends AppCompatActivity {
     private JSONObject res;
@@ -56,6 +59,9 @@ public class SplashScreen extends AppCompatActivity {
         locationRequest.setInterval(30000);
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        SharedPreferences params = PreferenceManager.getDefaultSharedPreferences(this);
+        Variables.distance = params.getInt("rayon_defaut", 500);
 
     }
 
@@ -134,11 +140,11 @@ public class SplashScreen extends AppCompatActivity {
             t = new HTTPRequestTask(l);
             t.start();
             while( !t.isFinished() ){
-                Log.i("HTTP_RES","Wait");
+                Log.i("WAIT_THREAD","Wait");
             }
 
             JSONArray features = t.getRes().getJSONArray("features");
-            String type_local, adresse = "N/A";
+            String type_local;
             int nb_pieces;
             double prix, longitude, latitude;
 
@@ -151,64 +157,52 @@ public class SplashScreen extends AppCompatActivity {
                     type_local = "Inconnu";
                 }
 
+                if(elt.has("valeur_fonciere")){
+                    prix = elt.getDouble("valeur_fonciere");
+                }else{
+                    prix = -1;
+                }
+
                 if(elt.has("nombre_pieces_principales")) {
                     nb_pieces = elt.getInt("nombre_pieces_principales");
                 }else{
                     nb_pieces = -1;
                 }
 
-                if(elt.has("numero_voie")){
-                    switch(adresse){
-                        case "N/A":
-                            adresse = elt.getString("numero_voie")+", ";
-                            break;
-                        default:
-                            adresse = adresse+elt.getString("numero_voie"+", ");
-                    }
+                StringBuilder builderAddress = new StringBuilder();
+
+                if(elt.has("numero_voie"))
+                {
+                    builderAddress.append(elt.getString("numero_voie"));
                 }
 
-                if(elt.has("type_voie")){
-                    switch(adresse){
-                        case "N/A":
-                            adresse = elt.getString("type_voie")+", ";
-                            break;
-                        default:
-                            adresse = adresse+elt.getString("type_voie"+", ");
-                    }
+                if(elt.has("type_voie"))
+                {
+                    builderAddress.append(" ");
+                    builderAddress.append(elt.getString("type_voie"));
                 }
 
-                if(elt.has("voie")){
-                    switch(adresse){
-                        case "N/A":
-                            adresse = elt.getString("voie")+", ";
-                            break;
-                        default:
-                            adresse = adresse+elt.getString("voie"+", ");
-                    }
+                if(elt.has("voie"))
+                {
+                    builderAddress.append(" ");
+                    builderAddress.append(elt.getString("voie"));
                 }
 
-                if(elt.has("code_postale")){
-                    switch(adresse){
-                        case "N/A":
-                            adresse = elt.getString("code_postal")+", ";
-                            break;
-                        default:
-                            adresse = adresse+elt.getString("code_postal"+", ");
-                    }
+                if(elt.has("code_postal"))
+                {
+                    builderAddress.append(", ");
+                    builderAddress.append(elt.getString("code_postal"));
                 }
 
-                if(elt.has("commune")){
-                    switch(adresse){
-                        case "N/A":
-                            adresse = elt.getString("commune");
-                            break;
-                        default:
-                            adresse = adresse+elt.getString("commune");
-                    }
+                if(elt.has("commune"))
+                {
+                    builderAddress.append(", ");
+                    builderAddress.append(elt.getString("commune"));
                 }
                 
-                db.insert(type_local, nb_pieces, elt.getDouble("valeur_fonciere"),
-                        adresse, elt.getDouble("lon"), elt.getDouble("lat"), l);
+                db.insert(type_local, nb_pieces, prix,
+                        builderAddress.toString(), elt.getDouble("lon"), elt.getDouble("lat"), l);
+                Log.i("HTTP_RES",elt.toString());
             }
         } catch (Exception e) {
             Log.e("HTTP_RES", Log.getStackTraceString(e));
@@ -220,7 +214,7 @@ public class SplashScreen extends AppCompatActivity {
                     startActivity(i);
                     finish();
                 }
-            }, 5000);
+            }, 100);
             Log.i("HTTP_RES","Requete HTTP reussie");
         }
 

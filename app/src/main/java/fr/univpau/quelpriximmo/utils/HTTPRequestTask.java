@@ -56,7 +56,6 @@ public class HTTPRequestTask extends Thread{
             in.close();
 
             res = new JSONObject(sb.toString());
-            Log.i("HTTP_RES",sb.toString());
             finished = true;
         } catch (Exception e) {
             e.printStackTrace();
