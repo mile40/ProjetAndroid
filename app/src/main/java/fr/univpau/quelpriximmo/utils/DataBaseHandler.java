@@ -64,7 +64,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         cv.put(ADRESSE, adresse);
         cv.put(LONGITUDE, longitude);
         cv.put(LATITUDE, latitude);
-        cv.put(DISTANCE, Math.abs((usrPos.getLatitude() - latitude)/(usrPos.getLongitude()-longitude)));
+        double x = (longitude - usrPos.getLongitude())* Math.cos((usrPos.getLatitude() + latitude)/2);
+        double y = (latitude - usrPos.getLatitude()):
+        cv.put(DISTANCE, Math.abs(Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2))*6371));
         db.insert(IMMO_TABLE, null, cv);
     }
 
