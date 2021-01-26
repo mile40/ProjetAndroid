@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,8 +35,30 @@ public class ImmoAdapter extends ArrayAdapter<ImmoModel> {
             viewHolder.type_item = (TextView) convertView.findViewById(R.id.type_bien_item);
             viewHolder.prix_item = (TextView) convertView.findViewById(R.id.prix_item);
             viewHolder.dist_item = (TextView) convertView.findViewById(R.id.dist_item);
+            viewHolder.btn_stats = (ImageButton) convertView.findViewById(R.id.btn_stats);
             convertView.setTag(viewHolder);
         }
+
+        //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
+        ImmoModel immo = getItem(pos);
+        switch(immo.getType_bien()){
+            case "Maison":
+                break;
+            case "Appartement":
+                break;
+            case "Dependance":
+                break;
+            case "Terrain":
+                break;
+            case "Inconnu":
+                break;
+            default:
+                break;
+        }
+        /*viewHolder.icon_item.setChecked(task.getChecked());
+        viewHolder.task_name.setText(task.getTaskName());
+        viewHolder.task_date.setText(task.getTaskDate().toString());
+        viewHolder.button*/
         return convertView;
     }
 
@@ -43,5 +67,6 @@ public class ImmoAdapter extends ArrayAdapter<ImmoModel> {
         public TextView type_item;
         public TextView prix_item;
         public TextView dist_item;
+        public ImageButton btn_stats;
     }
 }

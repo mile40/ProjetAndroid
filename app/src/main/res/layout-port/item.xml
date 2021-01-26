@@ -91,7 +91,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/btn_stats"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@color/app_purple"
