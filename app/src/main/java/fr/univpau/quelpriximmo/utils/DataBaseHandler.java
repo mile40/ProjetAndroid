@@ -1,5 +1,5 @@
 package fr.univpau.quelpriximmo.utils;
-
+import fr.univpau.quelpriximmo.Models.ImmoModel;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,7 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univpau.quelpriximmo.Models.ImmoModel;
+
 
 public class DataBaseHandler extends SQLiteOpenHelper {
     private static final int VERSION=1;
@@ -138,29 +138,38 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         return immoList;
     }
 
-    public List<String> getTypes_biens(){
-        List<String> typesBiens = new ArrayList<>();
-        Cursor cur = null;
-        typesBiens.add("Non specifie");
+    public ArrayList<Double> getPrix(String type_bien, double distance){
         String[] col = new String[1];
-        col[0]=TYPE_BIEN;
+        col[0] = PRIX;
+        ArrayList<Double> prix = new ArrayList<>();
+        Cursor cur = null;
+        String selection = "distance=?";
+        ArrayList<String> selectionArgs = new ArrayList<String>();
+        selectionArgs.add(Double.toString(distance));
+
+        if(type_bien.equals("Tout")){
+            selection = selection + "AND type_bien =?";
+            selectionArgs.add(type_bien);
+        }
 
         db.beginTransaction();
         try{
-            cur = db.query(true, IMMO_TABLE, col , null, null, null,null,null, null);
-            if (cur != null) {
-                if(cur.moveToFirst());
-
-                do{
-                    typesBiens.add(cur.getString(cur.getColumnIndex(TYPE_BIEN)));
-                }while(cur.moveToNext());
+            cur = db.query(false, IMMO_TABLE, col , selection, selectionArgs.toArray(new String[selectionArgs.size()]), null,null,null,null);
+        }catch(Exception e){
+            Log.e("DEBUG_LIST", Log.getStackTraceString(e));
+            if(cur!=null){
+                if(cur.moveToFirst()){
+                    do{
+                        prix.add(cur.getDouble(cur.getColumnIndex(PRIX)));
+                    }while(cur.moveToNext());
+                }
             }
-        }catch (Exception e){
-            Log.e("DEBUG_DB",""+ e.getStackTrace());
-        }finally {
+        }
+        finally {
             db.endTransaction();
             cur.close();
         }
-        return  typesBiens;
+        return prix;
+
     }
 }

@@ -27,11 +27,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import fr.univpau.quelpriximmo.utils.HTTPRequestTask;
 import fr.univpau.quelpriximmo.utils.DataBaseHandler;
 import fr.univpau.quelpriximmo.utils.Variables;

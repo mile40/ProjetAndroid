@@ -1,10 +1,8 @@
 package fr.univpau.quelpriximmo;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,15 +14,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.univpau.quelpriximmo.Controlers.OnCLickHandler;
 import fr.univpau.quelpriximmo.Controlers.SeekBarHandler;
 import fr.univpau.quelpriximmo.Controlers.SpinnerHandler;
-import fr.univpau.quelpriximmo.utils.DataBaseHandler;
 
 public class SearchActivity extends AppCompatActivity{
     private ImageButton btn_param;
