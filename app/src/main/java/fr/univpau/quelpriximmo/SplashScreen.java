@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -75,6 +76,10 @@ public class SplashScreen extends AppCompatActivity {
             Log.i("DEBUG_GPS","GPS Désactivé");
             buildAlertNoGPS();
         }
+        else if(!isNetworkConnected()){
+            Log.i("DEBUG_GPS","Internet Desactivé");
+            buildAlertNoInternet();
+        }
         else{
             Log.i("DEBUG_GPS","GPS Activé");
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
@@ -109,6 +114,25 @@ public class SplashScreen extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private void buildAlertNoInternet(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("L'application requiert une connection Internet pour continuer, Voulez-vous activer le Wifi ou les données mobile ?")
+                .setCancelable(false)
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS));
+                    }
+                })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                        finish();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void buildAlertNoGPS() {
@@ -217,6 +241,11 @@ public class SplashScreen extends AppCompatActivity {
             Log.i("HTTP_RES","Requete HTTP reussie");
         }
 
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 }
