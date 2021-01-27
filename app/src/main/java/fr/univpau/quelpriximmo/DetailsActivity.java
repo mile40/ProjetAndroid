@@ -27,7 +27,7 @@ public class DetailsActivity extends Activity implements View.OnClickListener {
         immo_type.setText(i.getStringExtra("IMMO_TYPE"));
 
         immo_prix = (TextView) findViewById(R.id.prix_bien);
-        immo_prix.setText(i.getStringExtra("IMMO_PRIX"));
+        immo_prix.setText(i.getStringExtra("IMMO_PRIX") + " €");
 
         immo_dist = (TextView) findViewById(R.id.text_dist_bien);
         immo_dist.setText("A " + i.getStringExtra("IMMO_DIST") + "m de votre position");
