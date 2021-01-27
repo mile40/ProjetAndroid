@@ -16,6 +16,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univpau.quelpriximmo.Models.ImmoModel;
 import fr.univpau.quelpriximmo.utils.DataBaseHandler;
 import fr.univpau.quelpriximmo.utils.Variables;
 
@@ -24,7 +25,7 @@ public class StatsActivity extends Activity implements View.OnClickListener {
     protected ImageButton btn;
     protected BarChart chart;
     private DataBaseHandler db;
-    private List<Double> prix;
+    private List<ImmoModel> prix;
     private BarDataSet dataSet;
     private ArrayList values, labels;
     private int rep[] = {0,0,0,0,0,0,0,0};
@@ -41,10 +42,9 @@ public class StatsActivity extends Activity implements View.OnClickListener {
         btn = (ImageButton) findViewById(R.id.btn_retour_stats);
         btn.setOnClickListener(this);
         chart = findViewById(R.id.stats_barchart);
-        prix = new ArrayList<>();
-        prix = db.getPrix(Variables.type_bien, Variables.distance);
         values = new ArrayList();
-
+        prix = ResultsActivity.getImmos();
+        Log.i("DEBUG_STAT", ""+prix.size());
         //instanciation des labels
         labels = new ArrayList();
         labels.add("<50k €");
@@ -59,28 +59,28 @@ public class StatsActivity extends Activity implements View.OnClickListener {
         labels.add("450-500k €");
         labels.add(">500k €");
         for(int i = 0; i < prix.size(); i++){
-            if(prix.get(i)< 50000){
+            if(prix.get(i).getPrix()< 50000){
                 rep[0] ++;
             }
-            if(prix.get(i)>= 50000 && prix.get(i)<100000) {
+            if(prix.get(i).getPrix()>= 50000 && prix.get(i).getPrix()<100000) {
                 rep[1] ++;
             }
-            if(prix.get(i)>= 100000 && prix.get(i)<150000) {
+            if(prix.get(i).getPrix()>= 100000 && prix.get(i).getPrix()<150000) {
                 rep[2] ++;
             }
-            if(prix.get(i)>= 150000 && prix.get(i)<200000) {
+            if(prix.get(i).getPrix()>= 150000 && prix.get(i).getPrix()<200000) {
                 rep[3] ++;
             }
-            if(prix.get(i)>= 250000 && prix.get(i)<300000) {
+            if(prix.get(i).getPrix()>= 250000 && prix.get(i).getPrix()<300000) {
                 rep[4] ++;
             }
-            if(prix.get(i)>= 350000 && prix.get(i)<400000) {
+            if(prix.get(i).getPrix()>= 350000 && prix.get(i).getPrix()<400000) {
                 rep[5] ++;
             }
-            if(prix.get(i)>= 450000 && prix.get(i)<500000) {
+            if(prix.get(i).getPrix()>= 450000 && prix.get(i).getPrix()<500000) {
                 rep[6] ++;
             }
-            if(prix.get(i)>= 500000 ) {
+            if(prix.get(i).getPrix()>= 500000 ) {
                 rep[7] ++;
             }
         }
@@ -89,7 +89,7 @@ public class StatsActivity extends Activity implements View.OnClickListener {
             values.add(new BarEntry(rep[i], i));
         }
 
-        dataSet = new BarDataSet(values, "répartition des prix");
+        dataSet = new BarDataSet(values, "nombre de biens");
         dataSet.setValueTextSize(10f);
         chart.animateY(1000);
         chart.getLegend().setTextSize(10f);

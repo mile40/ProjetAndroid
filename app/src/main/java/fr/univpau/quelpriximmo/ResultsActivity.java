@@ -21,7 +21,7 @@ import fr.univpau.quelpriximmo.utils.Variables;
 public class ResultsActivity extends Activity implements View.OnClickListener {
 
     protected DataBaseHandler db;
-    protected List<ImmoModel> listImmo;
+    private static List<ImmoModel> listImmo;
     protected ListView list;
     protected ImageButton btn;
     protected ImageButton stats;
@@ -61,5 +61,9 @@ public class ResultsActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         finish();
+    }
+
+    public static List<ImmoModel>getImmos(){
+        return listImmo;
     }
 }

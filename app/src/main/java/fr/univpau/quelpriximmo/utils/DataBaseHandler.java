@@ -138,38 +138,4 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         return immoList;
     }
 
-    public ArrayList<Double> getPrix(String type_bien, double distance){
-        String[] col = new String[1];
-        col[0] = PRIX;
-        ArrayList<Double> prix = new ArrayList<>();
-        Cursor cur = null;
-        String selection = "distance=?";
-        ArrayList<String> selectionArgs = new ArrayList<String>();
-        selectionArgs.add(Double.toString(distance));
-
-        if(type_bien.equals("Tout")){
-            selection = selection + "AND type_bien =?";
-            selectionArgs.add(type_bien);
-        }
-
-        db.beginTransaction();
-        try{
-            cur = db.query(false, IMMO_TABLE, col , selection, selectionArgs.toArray(new String[selectionArgs.size()]), null,null,null,null);
-        }catch(Exception e){
-            Log.e("DEBUG_LIST", Log.getStackTraceString(e));
-            if(cur!=null){
-                if(cur.moveToFirst()){
-                    do{
-                        prix.add(cur.getDouble(cur.getColumnIndex(PRIX)));
-                    }while(cur.moveToNext());
-                }
-            }
-        }
-        finally {
-            db.endTransaction();
-            cur.close();
-        }
-        return prix;
-
-    }
 }
