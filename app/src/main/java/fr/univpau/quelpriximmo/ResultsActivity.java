@@ -1,7 +1,10 @@
 package fr.univpau.quelpriximmo;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,12 +24,21 @@ public class ResultsActivity extends Activity implements View.OnClickListener {
     protected List<ImmoModel> listImmo;
     protected ListView list;
     protected ImageButton btn;
+    protected ImageButton stats;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultsactivity);
         btn = (ImageButton) findViewById(R.id.btn_retour);
+        stats = (ImageButton) findViewById(R.id.btn_go_stats);
+        stats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ResultsActivity.this, StatsActivity.class);
+                startActivity(i);
+            }
+        });
         btn.setOnClickListener(this);
         try{
             db = new DataBaseHandler(this);

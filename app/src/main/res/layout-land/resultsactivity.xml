@@ -6,17 +6,94 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/searchtext"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/app_purple"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="QuelPrixImmo"
-        android:textAlignment="center"
-        android:textColor="@color/app_yellow"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/searchtext"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/app_purple"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="QuelPrixImmo"
+                android:textAlignment="center"
+                android:textColor="@color/app_yellow"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_retour"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/app_purple"
+                android:foreground="@drawable/ic_left" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="0.1"
+                android:background="@color/app_purple"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Resultats"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/app_purple"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0"
+                    android:background="@color/app_purple"
+                    android:text="Stats"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/btn_go_stats"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0"
+                    android:background="@color/app_purple"
+                    android:foreground="@drawable/ic_right" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/result_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
 
     <ImageView
         android:layout_width="50dp"
@@ -24,37 +101,5 @@
         android:layout_alignStart="@+id/searchtext"
         android:layout_alignLeft="@+id/searchtext"
         android:src="@drawable/web_hi_res_512" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="50dp"
-        android:background="@color/app_purple"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="Resultats"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-
-    <ImageButton
-        android:id="@+id/btn_retour"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="50dp"
-        android:background="@android:color/transparent"
-        android:foreground="@drawable/ic_left" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/result_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
 
 </RelativeLayout>
