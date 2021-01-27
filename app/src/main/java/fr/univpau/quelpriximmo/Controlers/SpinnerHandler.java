@@ -10,20 +10,26 @@ import fr.univpau.quelpriximmo.R;
 import fr.univpau.quelpriximmo.utils.Variables;
 
 public class SpinnerHandler implements AdapterView.OnItemSelectedListener {
-    Spinner e;
+    AdapterView e;
 
-    public SpinnerHandler(Spinner item){
+    public SpinnerHandler(AdapterView item){
+        Log.i("DEBUG_SPINNER","spinner = ALLO1");
         e = item;
+        e.setOnItemSelectedListener(this);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (e.getId()){
+        Log.i("DEBUG_SPINNER","spinner = ALLO");
+        switch (parent.getId()){
             case R.id.spin_type_biens:
+                Log.i("DEBUG_SPINNER","spinner = type_bien");
                 String val = parent.getItemAtPosition(position).toString();
+                Log.i("DEBUG_SPINNER","val = " + val);
                 Variables.type_bien = val;
                 break;
             case R.id.spinner_pieces:
+                Log.i("DEBUG_SPINNER","spinner = nb_pieces");
                 switch(parent.getItemAtPosition(position).toString()){
                     case "Tout":
                         Variables.nb_pieces = -1;
@@ -47,6 +53,7 @@ public class SpinnerHandler implements AdapterView.OnItemSelectedListener {
                         Log.e("DEBUG_SPINNER", "Type inconnu: "+parent.getItemAtPosition(position).toString());
                         break;
                 }
+                Log.i("DEBUG_SPINNER","nb_pieces = " + Variables.nb_pieces);
                 break;
         }
     }

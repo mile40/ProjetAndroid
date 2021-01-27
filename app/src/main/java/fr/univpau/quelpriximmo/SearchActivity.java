@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -33,7 +34,7 @@ public class SearchActivity extends AppCompatActivity{
     private Spinner type_bien, nb_pieces;
     private SeekBarHandler sbh;
     private OnCLickHandler och, och2;
-    SpinnerHandler biensHandler, nbPiecesHandler;
+    private SpinnerHandler biensHandler, nbPiecesHandler;
     List<String> biens = new ArrayList<>();
     ArrayAdapter<String> biensAdapter;
 
@@ -62,8 +63,8 @@ public class SearchActivity extends AppCompatActivity{
         sbh = new SeekBarHandler(dist_recherche, tw);
         och = new OnCLickHandler((View) btn_param);
         och2 = new OnCLickHandler((View) btn_rech);
-        biensHandler = new SpinnerHandler(type_bien);
-        nbPiecesHandler = new SpinnerHandler(nb_pieces);
+        biensHandler = new SpinnerHandler((AdapterView) type_bien);
+        nbPiecesHandler = new SpinnerHandler((AdapterView) nb_pieces);
 
     }
 

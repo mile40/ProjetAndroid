@@ -201,6 +201,7 @@ public class SplashScreen extends AppCompatActivity {
                 }
 
                 if(type_local.equals("Appartement") || type_local.equals("Maison")){
+                    Log.i("DEBUG_LIST","type = "+type_local);
                     db.insert(type_local, nb_pieces, prix,
                             builderAddress.toString(), elt.getDouble("lon"), elt.getDouble("lat"), l);
                 }
