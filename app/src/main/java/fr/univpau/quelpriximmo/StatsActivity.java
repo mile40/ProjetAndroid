@@ -28,7 +28,7 @@ public class StatsActivity extends Activity implements View.OnClickListener {
     private List<ImmoModel> prix;
     private BarDataSet dataSet;
     private ArrayList values, labels;
-    private int rep[] = {0,0,0,0,0,0,0,0};
+    private int rep[] = {0,0,0,0,0,0,0,0,0,0,0};
     private BarData data;
 
     @Override
@@ -60,32 +60,52 @@ public class StatsActivity extends Activity implements View.OnClickListener {
         labels.add(">500k €");
         for(int i = 0; i < prix.size(); i++){
             if(prix.get(i).getPrix()< 50000){
+                Log.i("DEBUG_STAT", "<50k €");
                 rep[0] ++;
             }
             if(prix.get(i).getPrix()>= 50000 && prix.get(i).getPrix()<100000) {
+                Log.i("DEBUG_STAT", "50-100k €");
                 rep[1] ++;
             }
             if(prix.get(i).getPrix()>= 100000 && prix.get(i).getPrix()<150000) {
+                Log.i("DEBUG_STAT", "100-150k €");
                 rep[2] ++;
             }
             if(prix.get(i).getPrix()>= 150000 && prix.get(i).getPrix()<200000) {
+                Log.i("DEBUG_STAT", "150-200k €");
                 rep[3] ++;
             }
-            if(prix.get(i).getPrix()>= 250000 && prix.get(i).getPrix()<300000) {
+            if(prix.get(i).getPrix()>= 200000 && prix.get(i).getPrix()<250000) {
+                Log.i("DEBUG_STAT", "200-250k €");
                 rep[4] ++;
             }
-            if(prix.get(i).getPrix()>= 350000 && prix.get(i).getPrix()<400000) {
+            if(prix.get(i).getPrix()>= 250000 && prix.get(i).getPrix()<300000) {
+                Log.i("DEBUG_STAT", "250-300k €");
                 rep[5] ++;
             }
-            if(prix.get(i).getPrix()>= 450000 && prix.get(i).getPrix()<500000) {
+            if(prix.get(i).getPrix()>= 300000 && prix.get(i).getPrix()<350000) {
+                Log.i("DEBUG_STAT", "300-350k €");
                 rep[6] ++;
             }
-            if(prix.get(i).getPrix()>= 500000 ) {
+            if(prix.get(i).getPrix()>= 350000 && prix.get(i).getPrix()<400000) {
+                Log.i("DEBUG_STAT", "350-400k €");
                 rep[7] ++;
+            }
+            if(prix.get(i).getPrix()>= 400000 && prix.get(i).getPrix()<450000) {
+                Log.i("DEBUG_STAT", "400-450k €");
+                rep[8] ++;
+            }
+            if(prix.get(i).getPrix()>= 450000 && prix.get(i).getPrix()<500000) {
+                Log.i("DEBUG_STAT", "450-500k €");
+                rep[9] ++;
+            }
+            if(prix.get(i).getPrix()>= 500000 ) {
+                Log.i("DEBUG_STAT", ">500k €");
+                rep[10] ++;
             }
         }
 
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < 11; i++){
             values.add(new BarEntry(rep[i], i));
         }
 
