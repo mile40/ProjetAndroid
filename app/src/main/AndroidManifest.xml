@@ -21,6 +21,7 @@
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".ResultsActivity"/>
         <activity android:name=".DetailsActivity"/>
+        <activity android:name=".StatsActivity" android:screenOrientation="landscape" />
     </application>
 
 </manifest>
