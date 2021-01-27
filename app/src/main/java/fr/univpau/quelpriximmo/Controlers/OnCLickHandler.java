@@ -29,9 +29,9 @@ public class OnCLickHandler implements View.OnClickListener{
                 i = new Intent(btn.getContext() , SettingsActivity.class);
                 btn.getContext().startActivity(i);
                 break;
+
                 //bouton permettant de lancer la requette http et d'aller sur la page de resultat
             case R.id.btn_recherche:
-                //TODO: faire le code qui gère ça
                 i = new Intent(btn.getContext() , ResultsActivity.class);
                 btn.getContext().startActivity(i);
                 break;
