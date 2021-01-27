@@ -84,8 +84,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         ArrayList<String> selectionArgs = new ArrayList<String>();
         selectionArgs.add(Double.toString(distance));
 
-        if(!type_bien.equals("Non specifie")){
-            selection = selection + "AND type_bien =? ";
+        if(!type_bien.equals("Tout")){
+            selection = selection + "AND type_bien =?";
             selectionArgs.add(type_bien);
         }
 
@@ -138,29 +138,29 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         return immoList;
     }
 
-
-    public ImmoModel getImmoById(int id){
+    public List<String> getTypes_biens(){
+        List<String> typesBiens = new ArrayList<>();
         Cursor cur = null;
-        ImmoModel immo = new ImmoModel();
-        String[] tab = new String[1];
-        tab[0] = String.valueOf(id);
+        typesBiens.add("Non specifie");
+        String[] col = new String[1];
+        col[0]=TYPE_BIEN;
+
         db.beginTransaction();
         try{
-            cur = db.query(false, IMMO_TABLE, null,  "id =?", tab , null, null, null, null);
-            if(cur != null){
-                if(cur.moveToFirst()){
-                    immo.setID(cur.getInt(cur.getColumnIndex(ID)));
-                    immo.setAdress(cur.getString(cur.getColumnIndex(ADRESSE)));
-                    immo.setPrix(cur.getDouble(cur.getColumnIndex(PRIX)));
-                    immo.setNb_pieces(cur.getInt(cur.getColumnIndex(NB_PIECES)));
-                    immo.setDistance(cur.getDouble(cur.getColumnIndex(DISTANCE)));
-                    immo.setCoords(cur.getDouble(cur.getColumnIndex(LONGITUDE)), cur.getDouble(cur.getColumnIndex(LATITUDE)));
-                }
+            cur = db.query(true, IMMO_TABLE, col , null, null, null,null,null, null);
+            if (cur != null) {
+                if(cur.moveToFirst());
+
+                do{
+                    typesBiens.add(cur.getString(cur.getColumnIndex(TYPE_BIEN)));
+                }while(cur.moveToNext());
             }
+        }catch (Exception e){
+            Log.e("DEBUG_DB",""+ e.getStackTrace());
         }finally {
             db.endTransaction();
             cur.close();
         }
-        return immo;
+        return  typesBiens;
     }
 }

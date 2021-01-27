@@ -16,12 +16,10 @@
         <item>Tout</item>
         <item>Maison</item>
         <item>Appartement</item>
-        <item>Local</item>
-        <item>Dependence</item>
     </string-array>
 
     <string-array name="param_nb_piece">
-        <item>Non specifié</item>
+        <item>Tout</item>
         <item>1 piece</item>
         <item>2 pieces</item>
         <item>3 pieces</item>

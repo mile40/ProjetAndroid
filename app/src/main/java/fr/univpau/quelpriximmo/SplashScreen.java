@@ -200,8 +200,11 @@ public class SplashScreen extends AppCompatActivity {
                     builderAddress.append(elt.getString("commune"));
                 }
 
-                db.insert(type_local, nb_pieces, prix,
-                        builderAddress.toString(), elt.getDouble("lon"), elt.getDouble("lat"), l);
+                if(type_local.equals("Appartement") || type_local.equals("Maison")){
+                    db.insert(type_local, nb_pieces, prix,
+                            builderAddress.toString(), elt.getDouble("lon"), elt.getDouble("lat"), l);
+                }
+
                 Log.i("HTTP_RES",elt.toString());
             }
         } catch (Exception e) {

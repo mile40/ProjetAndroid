@@ -6,23 +6,36 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.univpau.quelpriximmo.Controlers.OnCLickHandler;
 import fr.univpau.quelpriximmo.Controlers.SeekBarHandler;
+import fr.univpau.quelpriximmo.Controlers.SpinnerHandler;
+import fr.univpau.quelpriximmo.utils.DataBaseHandler;
 
 public class SearchActivity extends AppCompatActivity{
     private ImageButton btn_param;
     private SeekBar dist_recherche;
     private TextView tw;
     private Button btn_rech;
+    private Spinner type_bien, nb_pieces;
+    private SeekBarHandler sbh;
+    private OnCLickHandler och, och2;
+    SpinnerHandler biensHandler, nbPiecesHandler;
+    List<String> biens = new ArrayList<>();
+    ArrayAdapter<String> biensAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -30,11 +43,14 @@ public class SearchActivity extends AppCompatActivity{
         setContentView(R.layout.searchactivity);
         getSupportActionBar().hide();
 
+
         //récupération des éléments du layout nous intéressant
         btn_param =(ImageButton) findViewById(R.id.settingsButton);
         dist_recherche = (SeekBar) findViewById(R.id.slider_dist);
         tw = (TextView) findViewById(R.id.lab_dist_intersection);
         btn_rech = (Button) findViewById(R.id.btn_recherche);
+        type_bien = (Spinner) findViewById(R.id.spin_type_biens);
+        nb_pieces = (Spinner) findViewById(R.id.spinner_pieces);
 
         SharedPreferences params = PreferenceManager.getDefaultSharedPreferences(this);
         int rayon = params.getInt("rayon_defaut", 500);
@@ -42,9 +58,12 @@ public class SearchActivity extends AppCompatActivity{
         tw.setText("0 m - "+ rayon + " m");
         //affectation des éventuels éventHandlers
 
-        SeekBarHandler sbh = new SeekBarHandler(dist_recherche, tw);
-        OnCLickHandler och = new OnCLickHandler((View) btn_param);
-        OnCLickHandler och2 = new OnCLickHandler((View) btn_rech);
+
+        sbh = new SeekBarHandler(dist_recherche, tw);
+        och = new OnCLickHandler((View) btn_param);
+        och2 = new OnCLickHandler((View) btn_rech);
+        biensHandler = new SpinnerHandler(type_bien);
+        nbPiecesHandler = new SpinnerHandler(nb_pieces);
 
     }
 
