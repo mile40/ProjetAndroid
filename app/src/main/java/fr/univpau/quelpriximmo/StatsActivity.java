@@ -3,6 +3,7 @@ package fr.univpau.quelpriximmo;
 import android.app.Activity;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -32,6 +33,7 @@ public class StatsActivity extends Activity implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("DEBUG_STAT", "ALLO");
         setContentView(R.layout.statsactivity);
         db = new DataBaseHandler(this);
         db.openDatabase();
@@ -56,7 +58,6 @@ public class StatsActivity extends Activity implements View.OnClickListener {
         labels.add("400-450k €");
         labels.add("450-500k €");
         labels.add(">500k €");
-
         for(int i = 0; i < prix.size(); i++){
             if(prix.get(i)< 50000){
                 rep[0] ++;
@@ -94,7 +95,11 @@ public class StatsActivity extends Activity implements View.OnClickListener {
         chart.getLegend().setTextSize(10f);
         chart.getXAxis().setTextSize(8f);
         chart.setDrawGridBackground(false);
-        data = new BarData((IBarDataSet) labels, dataSet);
+        chart.setDescription("répartition des prix");
+        data = new BarData(labels, dataSet);
+        chart.setData(data);
+
+
     }
 
     @Override
