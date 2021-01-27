@@ -32,6 +32,7 @@ public class StatsActivity extends Activity implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.statsactivity);
         db = new DataBaseHandler(this);
         db.openDatabase();
         setTitle("Répartition des prix");
