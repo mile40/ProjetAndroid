@@ -39,6 +39,7 @@ public class SeekBarHandler implements SeekBar.OnSeekBarChangeListener {
                 break;
             default:
                 Log.e("Debug", "SeekBar "+seekBar.getId()+" inconnu.");
+                break;
         }
     }
 
