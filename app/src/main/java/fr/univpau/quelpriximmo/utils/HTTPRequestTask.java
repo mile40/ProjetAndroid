@@ -1,8 +1,12 @@
 package fr.univpau.quelpriximmo.utils;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import androidx.appcompat.app.AlertDialog;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,6 +26,7 @@ public class HTTPRequestTask extends Thread{
     protected Location loc;
     protected JSONObject res;
     protected boolean finished = false;
+    protected int code = 200;
 
     public HTTPRequestTask(Location l){
         try{
@@ -37,7 +42,7 @@ public class HTTPRequestTask extends Thread{
         doHttpRequest();
     }
 
-    protected void doHttpRequest() {
+    protected int doHttpRequest() {
         try {
             finished = false;
             URL url = new URL("https://api.cquest.org/dvf"
@@ -45,8 +50,16 @@ public class HTTPRequestTask extends Thread{
                     + "&lon=" + loc.getLongitude()
                     + "&dist=2000");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            code = urlConnection.getResponseCode();
+            if(code != 200){
+                finished = true;
+                return code;
+
+            }
+
             // urlConnection.setReadTimeout(15000);
             // urlConnection.setConnectTimeout(15000);
+
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             StringBuilder sb = new StringBuilder();
             BufferedReader r = new BufferedReader(new InputStreamReader(in),1000);
@@ -57,10 +70,12 @@ public class HTTPRequestTask extends Thread{
 
             res = new JSONObject(sb.toString());
             finished = true;
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("HTTP_RES", Log.getStackTraceString(e));
         }
+        return code;
     }
 
     public JSONObject getRes(){
@@ -70,4 +85,9 @@ public class HTTPRequestTask extends Thread{
     public boolean isFinished() {
         return finished;
     }
+
+    public int getCode(){
+        return this.code;
+    }
+
 }

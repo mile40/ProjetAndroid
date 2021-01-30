@@ -154,91 +154,108 @@ public class SplashScreen extends AppCompatActivity {
         alert.show();
     }
 
-    protected void doHttpRequest(Location l){
-        try{
-            t = new HTTPRequestTask(l);
-            t.start();
-            while( !t.isFinished() ){
-                Log.i("WAIT_THREAD","Wait");
-            }
-
-            JSONArray features = t.getRes().getJSONArray("features");
-            String type_local;
-            int nb_pieces;
-            double prix, longitude, latitude;
-
-            for(int i = 0; i< features.length(); i++){
-                JSONObject elt = features.getJSONObject(i).getJSONObject("properties");
-                Log.i("HTTP_RES",elt.toString());
-                if(elt.has("type_local")){
-                    type_local = elt.getString("type_local");
-                }else{
-                    type_local = "Inconnu";
-                }
-
-                if(elt.has("valeur_fonciere")){
-                    prix = elt.getDouble("valeur_fonciere");
-                }else{
-                    prix = -1;
-                }
-
-                if(elt.has("nombre_pieces_principales")) {
-                    nb_pieces = elt.getInt("nombre_pieces_principales");
-                }else{
-                    nb_pieces = -1;
-                }
-
-                StringBuilder builderAddress = new StringBuilder();
-
-                if(elt.has("numero_voie"))
-                {
-                    builderAddress.append(elt.getString("numero_voie"));
-                }
-
-                if(elt.has("type_voie"))
-                {
-                    builderAddress.append(" ");
-                    builderAddress.append(elt.getString("type_voie"));
-                }
-
-                if(elt.has("voie"))
-                {
-                    builderAddress.append(" ");
-                    builderAddress.append(elt.getString("voie"));
-                }
-
-                if(elt.has("code_postal"))
-                {
-                    builderAddress.append(", ");
-                    builderAddress.append(elt.getString("code_postal"));
-                }
-
-                if(elt.has("commune"))
-                {
-                    builderAddress.append(", ");
-                    builderAddress.append(elt.getString("commune"));
-                }
-
-                if(type_local.equals("Appartement") || type_local.equals("Maison")){
-                    Log.i("DEBUG_LIST","type = "+type_local);
-                    db.insert(type_local, nb_pieces, prix,
-                            builderAddress.toString(), elt.getDouble("lon"), elt.getDouble("lat"), l);
-                }
-
-                Log.i("HTTP_RES",elt.toString());
-            }
-        } catch (Exception e) {
-            Log.e("HTTP_RES", Log.getStackTraceString(e));
-        } finally {
-            final Intent i = new Intent(SplashScreen.this, SearchActivity.class);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(i);
+    private void buildAlertNoRequest(int code) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("La requete n'a pas pu aboutir, veuillez réessayer ultérieurement (code: "+ code + ")")
+                .setCancelable(true)
+                .setPositiveButton("ok", (dialog, id) -> {
+                    dialog.cancel();
                     finish();
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+    protected void doHttpRequest(Location l){
+        t = new HTTPRequestTask(l);
+        t.start();
+        while( !t.isFinished() ){
+            Log.i("WAIT_THREAD","Wait");
+        }
+        if(t.getCode() != 200){
+            buildAlertNoRequest(t.getCode());
+        }else{
+            try{
+
+
+                JSONArray features = t.getRes().getJSONArray("features");
+                String type_local;
+                int nb_pieces;
+                double prix, longitude, latitude;
+
+                for(int i = 0; i< features.length(); i++){
+                    JSONObject elt = features.getJSONObject(i).getJSONObject("properties");
+                    Log.i("HTTP_RES",elt.toString());
+                    if(elt.has("type_local")){
+                        type_local = elt.getString("type_local");
+                    }else{
+                        type_local = "Inconnu";
+                    }
+
+                    if(elt.has("valeur_fonciere")){
+                        prix = elt.getDouble("valeur_fonciere");
+                    }else{
+                        prix = -1;
+                    }
+
+                    if(elt.has("nombre_pieces_principales")) {
+                        nb_pieces = elt.getInt("nombre_pieces_principales");
+                    }else{
+                        nb_pieces = -1;
+                    }
+
+                    StringBuilder builderAddress = new StringBuilder();
+
+                    if(elt.has("numero_voie"))
+                    {
+                        builderAddress.append(elt.getString("numero_voie"));
+                    }
+
+                    if(elt.has("type_voie"))
+                    {
+                        builderAddress.append(" ");
+                        builderAddress.append(elt.getString("type_voie"));
+                    }
+
+                    if(elt.has("voie"))
+                    {
+                        builderAddress.append(" ");
+                        builderAddress.append(elt.getString("voie"));
+                    }
+
+                    if(elt.has("code_postal"))
+                    {
+                        builderAddress.append(", ");
+                        builderAddress.append(elt.getString("code_postal"));
+                    }
+
+                    if(elt.has("commune"))
+                    {
+                        builderAddress.append(", ");
+                        builderAddress.append(elt.getString("commune"));
+                    }
+
+                    if(type_local.equals("Appartement") || type_local.equals("Maison")){
+                        Log.i("DEBUG_LIST","type = "+type_local);
+                        db.insert(type_local, nb_pieces, prix,
+                                builderAddress.toString(), elt.getDouble("lon"), elt.getDouble("lat"), l);
+                    }
+
+                    Log.i("HTTP_RES",elt.toString());
                 }
-            }, 100);
-            Log.i("HTTP_RES","Requete HTTP reussie");
+            } catch (Exception e) {
+                Log.e("HTTP_RES", Log.getStackTraceString(e));
+            } finally {
+                final Intent i = new Intent(SplashScreen.this, SearchActivity.class);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(i);
+                        finish();
+                    }
+                }, 1000);
+                Log.i("HTTP_RES","Requete HTTP reussie");
+            }
+
         }
 
     }
