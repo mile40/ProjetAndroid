@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -35,7 +36,7 @@ import fr.univpau.quelpriximmo.utils.Variables;
 public class SplashScreen extends AppCompatActivity {
     private JSONObject res;
     private DataBaseHandler db;
-    //private Location loc;
+    private Location location;
     private LocationManager manager;
     private LocationRequest locationRequest;
     private FusedLocationProviderClient fusedLocationClient;
@@ -62,31 +63,81 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         updateGPS();
     }
 
 
-
-    protected void updateGPS(){
+    protected void updateGPS() {
         manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            Log.i("DEBUG_GPS","GPS Désactivé");
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Log.i("DEBUG_GPS", "GPS Désactivé");
             buildAlertNoGPS();
-        }
-        else if(!isNetworkConnected()){
-            Log.i("DEBUG_GPS","Internet Desactivé");
+        } else if (!isNetworkConnected()) {
+            Log.i("DEBUG_GPS", "Internet Desactivé");
             buildAlertNoInternet();
-        }
-        else{
-            Log.i("DEBUG_GPS","GPS Activé");
+        } else {
+            Log.i("DEBUG_GPS", "GPS Activé");
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.i("DEBUG_LOCATION", "Location no rights");
+            }
+            else{
+                manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(@NonNull Location location) {
+                        Log.i("DEBUG_LOCATION", "LOCATION CHANGED");
+                    }
+                    @Override
+                    public void onProviderEnabled(@NonNull String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(@NonNull String provider) {
+
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+                });
+                /*location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if(location != null){
+                    Log.i("DEBUG_LOCATION", location.toString());
+                }
+                else{
+                    Log.i("DEBUG_LOCATION", "Location null GPS");
+                }
+                while(location == null) {
+                    location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
+                Log.i("DEBUG_LOCATION", location.toString());*/
+                /*location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if(location != null){
+                    Log.i("DEBUG_LOCATION", location.toString());
+                }
+                else{
+                    Log.i("DEBUG_LOCATION", "Location null GPS");
+                }*/
+            }
+            /*if(location == null){
+                location = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if(location != null){
+                    Log.i("DEBUG_LOCATION", location.toString());
+                }
+                else{
+                    Log.i("DEBUG_LOCATION", "Location null Network");
+                }
+            }*/
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                 fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        Log.i("DEBUG_GPS", "Long : " + Double.toString(location.getLongitude()) + " Lat : " + Double.toString(location.getLatitude()) );
+                        //Log.i("DEBUG_GPS", "Long : " + Double.toString(location.getLongitude()) + " Lat : " + Double.toString(location.getLatitude()) );
                         doHttpRequest(location);
                     }
                 });
@@ -169,7 +220,7 @@ public class SplashScreen extends AppCompatActivity {
         t = new HTTPRequestTask(l);
         t.start();
         while( !t.isFinished() ){
-            Log.i("WAIT_THREAD","Wait");
+            //Log.i("WAIT_THREAD","Wait");
         }
         if(t.getCode() != 200){
             buildAlertNoRequest(t.getCode());

@@ -100,6 +100,6 @@
         android:layout_height="50dp"
         android:layout_alignStart="@+id/searchtext"
         android:layout_alignLeft="@+id/searchtext"
-        android:src="@drawable/web_hi_res_512" />
+        app:srcCompat="@drawable/web_hi_res_512" />
 
 </RelativeLayout>

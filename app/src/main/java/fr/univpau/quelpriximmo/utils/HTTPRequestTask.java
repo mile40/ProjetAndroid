@@ -22,7 +22,7 @@ import java.net.URL;
 
 public class HTTPRequestTask extends Thread{
 
-    protected URL url;
+    public URL url;
     protected Location loc;
     protected JSONObject res;
     protected boolean finished = false;
@@ -32,6 +32,7 @@ public class HTTPRequestTask extends Thread{
         try{
             loc = new Location(l);
             url = new URL("https://api.cquest.org/dvf?lat=" + loc.getLatitude() + "&lon=" + loc.getLongitude() + "&dist=2000");
+            Log.i("DEBUG_URL", this.url.toString());
         }catch(Exception e){
             e.printStackTrace();
             Log.e("HTTP_RES", Log.getStackTraceString(e));
