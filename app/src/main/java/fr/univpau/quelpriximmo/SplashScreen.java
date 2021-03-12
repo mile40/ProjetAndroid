@@ -65,7 +65,13 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        updateGPS();
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                updateGPS();
+            }
+        }, 2000 );//time in milisecond
     }
 
 
